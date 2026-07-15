@@ -1,65 +1,197 @@
-import Image from "next/image";
+import React from "react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="flex min-h-screen flex-col overflow-x-clip bg-[#030303]">
+      <main className="mx-auto w-full max-w-4xl flex-1 px-6 pt-24 pb-16 md:px-8 md:pt-28 md:pb-24">
+        {/* HEADER / HERO */}
+        <header className="flex flex-col border-b border-zinc-900 pb-12 mb-12">
+          <h1 className="mb-6 font-mono text-5xl font-bold tracking-tighter text-white md:text-7xl">
+            UUID v7
+            <span className="block mt-2 bg-gradient-to-r from-zinc-200 to-zinc-500 bg-clip-text text-transparent text-4xl md:text-5xl font-sans font-semibold tracking-normal">
+              The New Default.
+            </span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <p className="max-w-2xl text-xl text-zinc-400 leading-relaxed font-sans">
+              A evolução inevitável das chaves primárias.
+            </p>
+          </div>
+
+          {/* AUTHOR METADATA */}
+          <div className="mt-8 flex items-center gap-4">
+            <div className="h-10 w-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 font-bold text-sm">
+              MB
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold text-zinc-200">Mateus Bosquetti</span>
+              <div className="mt-0.5 flex items-center gap-2 font-mono text-xs text-zinc-500">
+                <time dateTime="2026-07-15">15 de Julho, 2026</time>
+                <span className="h-1 w-1 rounded-full bg-zinc-700"></span>
+                <span>Leitura de 8 min</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* ARTICLE CONTENTS */}
+        <article className="space-y-12 text-zinc-300">
+          
+          {/* SEÇÃO 1: O PROBLEMA */}
+          <section className="space-y-6">
+            <p className="text-lg leading-relaxed text-zinc-400">
+              A primeira coisa ao desenvolvermos uma modelagem de dados de uma tabela é pensar na PK, e por mais que pareça simples, as opções mais escolhidas trazem uma série de problemas inimagináveis.
+            </p>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              Durante décadas, fomos ensinados a usar chaves inteiras auto-incrementais (<code className="text-zinc-200 font-mono bg-zinc-900 px-1.5 py-0.5 rounded">BIGINT AUTO_INCREMENT</code>) por serem eficientes e simples. No entanto, no ecossistema moderno de microsserviços, arquiteturas distribuídas e concorrência massiva, essa simplicidade desmorona:
+            </p>
+            <ul className="list-disc pl-6 space-y-3 text-zinc-400">
+              <li>
+                <strong className="text-zinc-200 font-medium">Gargalo de Coordenação:</strong> Dois servidores de aplicação diferentes não podem gerar um ID numérico simultaneamente sem consultar um banco de dados centralizado. Isso cria um gargalo inevitável de latência e concorrência na escrita.
+              </li>
+              <li>
+                <strong className="text-zinc-200 font-medium">Vazamento de Métricas de Negócio:</strong> Expor IDs sequenciais na URL (<code className="text-zinc-200 font-mono bg-zinc-900 px-1 py-0.5 rounded">/pedidos/1004</code>) permite que concorrentes mapeiem sua taxa de vendas ou quantidade de usuários cadastrados simplesmente fazendo duas requisições consecutivas.
+              </li>
+            </ul>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              Para resolver isso, muitos desenvolvedores adotaram o <code className="text-zinc-200 font-mono bg-zinc-900 px-1.5 py-0.5 rounded">UUID v4</code> (IDs de 128 bits gerados aleatoriamente). Embora resolva a descentralização, o UUID v4 traz um problema silencioso e ainda mais perigoso: **a destruição da velocidade de escrita dos índices em árvores B-Tree**, forçando o banco de dados a reordenar páginas físicas no disco a cada nova inserção.
+            </p>
+          </section>
+
+          {/* SEÇÃO 2: A SOLUÇÃO */}
+          <section className="space-y-6 pt-8 border-t border-zinc-900">
+            <h2 className="font-mono text-3xl font-bold tracking-tight text-zinc-100">
+              02. A Solução: UUID v7
+            </h2>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              O melhor dos dois mundos. O UUID v7 une a unicidade universal de 128 bits com a ordenação temporal (Time-Ordered), sendo hoje suportado nativamente por diversos bancos de dados modernos.
+            </p>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              O UUID v7 codifica a data e hora atual (Unix epoch em milissegundos) em seus primeiros 48 bits, seguidos por bits fixos de versão e variante, e finalizando com 74 bits de entropia aleatória. Isso significa que, lexicograficamente, os IDs gerados cronologicamente serão sempre sequenciais.
+            </p>
+
+            {/* PLACEHOLDER: WIDGET 1 - GERADOR & RAIO-X */}
+            <div className="w-full my-8 p-12 border border-dashed border-zinc-800 bg-zinc-950/40 rounded-2xl flex flex-col items-center justify-center gap-4 text-center">
+              <div className="h-10 w-10 rounded-full bg-violet-950/50 border border-violet-800 flex items-center justify-center text-violet-400 font-semibold text-lg animate-pulse">
+                ⚡
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-zinc-200">Widget: Gerador & Raio-X de Bits</h3>
+                <p className="text-sm text-zinc-500 max-w-md mt-1">
+                  [Fase Interativa] Aqui renderizaremos o gerador visual de UUID v7, que explode a chave em blocos coloridos detalhando o Timestamp (roxo), Versão (verde), Variante (azul) e Entropia (laranja).
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* SEÇÃO 3: FUNCIONAMENTO & PERFORMANCE */}
+          <section className="space-y-6 pt-8 border-t border-zinc-900">
+            <h2 className="font-mono text-3xl font-bold tracking-tight text-zinc-100">
+              03. Performance no Banco: B-Tree
+            </h2>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              Por que a ordenação temporal importa tanto para o banco de dados? A maioria dos bancos de dados relacionais (PostgreSQL, MySQL, SQL Server) organiza suas chaves primárias em estruturas de dados chamadas **B-Trees** (Árvores B).
+            </p>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              Quando você insere um registro com UUID v4 (totalmente aleatório), o banco tenta inseri-lo em um local aleatório no meio do índice. Se o bloco (página de disco) correspondente já estiver cheio, o banco é forçado a dividir a página física ao meio para abrir espaço (<strong className="text-zinc-200 font-medium">Page Split</strong>). Isso resulta em I/O de disco pesado, fragmentação e degradação drástica da performance conforme a tabela cresce.
+            </p>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              Com o UUID v7, como os primeiros bits são baseados no tempo incremental, cada nova chave inserida é naturalmente maior que a anterior. O banco de dados insere os novos registros sempre no final da estrutura do índice, de forma linear e ordenada, com **zero quebra de páginas**.
+            </p>
+
+            {/* PLACEHOLDER: WIDGET 2 - SIMULADOR B-TREE */}
+            <div className="w-full my-8 p-12 border border-dashed border-zinc-800 bg-zinc-950/40 rounded-2xl flex flex-col items-center justify-center gap-4 text-center">
+              <div className="h-10 w-10 rounded-full bg-emerald-950/50 border border-emerald-800 flex items-center justify-center text-emerald-400 font-semibold text-lg animate-pulse">
+                🌳
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-zinc-200">Widget: Simulador de Árvore B-Tree</h3>
+                <p className="text-sm text-zinc-500 max-w-md mt-1">
+                  [Fase Interativa] Aqui exibiremos a simulação lado a lado de inserção na B-Tree, demonstrando visualmente as quebras de blocos e fragmentação no UUID v4 versus o fluxo linear e contínuo no UUID v7.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* SEÇÃO 4: CONTRAS & TRADE-OFFS */}
+          <section className="space-y-6 pt-8 border-t border-zinc-900">
+            <h2 className="font-mono text-3xl font-bold tracking-tight text-zinc-100">
+              04. Contras e o Risco de Privacidade
+            </h2>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              Nenhuma escolha de arquitetura vem de graça. O UUID v7 apresenta desvantagens objetivas que você deve levar em conta antes de adotá-lo:
+            </p>
+            <ul className="list-disc pl-6 space-y-3 text-zinc-400">
+              <li>
+                <strong className="text-zinc-200 font-medium">Espaço em Disco e Cache:</strong> Um UUID v7 ocupa **16 bytes**, enquanto um ID numérico sequencial (`BIGINT`) consome apenas **8 bytes**. Em bancos de dados gigantescos, esse dobro de tamanho se propaga por todas as chaves estrangeiras (`FKs`) e índices secundários, exigindo mais memória RAM para manter os índices em cache.
+              </li>
+              <li>
+                <strong className="text-zinc-200 font-medium">Dificuldade de Debug em Testes:</strong> Em logs ou scripts de testes unitários rápidos, ler e rastrear visualmente registros relacionados é muito mais prático e simples com IDs simples como <code className="text-zinc-200 font-mono bg-zinc-900 px-1 py-0.5 rounded">ID: 1</code>, <code className="text-zinc-200 font-mono bg-zinc-900 px-1 py-0.5 rounded">ID: 2</code> do que chaves de 36 caracteres hexadecimais.
+              </li>
+            </ul>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              O contra mais grave, contudo, é a **Vazamento de Privacidade Temporal (Metadata Leak)**. Como os primeiros 48 bits do UUID v7 representam a data de criação, qualquer usuário que tenha acesso ao ID exposto publicamente na URL pode descobrir o milissegundo exato em que aquele recurso foi criado.
+            </p>
+
+            {/* PLACEHOLDER: WIDGET 3 - FAKE BROWSER / DECODER */}
+            <div className="w-full my-8 p-12 border border-dashed border-zinc-800 bg-zinc-950/40 rounded-2xl flex flex-col items-center justify-center gap-4 text-center">
+              <div className="h-10 w-10 rounded-full bg-orange-950/50 border border-orange-800 flex items-center justify-center text-orange-400 font-semibold text-lg animate-pulse">
+                🌐
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-zinc-200">Widget: Fake Browser & URL Decoder</h3>
+                <p className="text-sm text-zinc-500 max-w-md mt-1">
+                  [Fase Interativa] Aqui simularemos um navegador fake contendo um UUID v7 na URL de um pedido de compra, permitindo ao usuário decodificar o ID e revelar o dia/hora exato da compra, provando o vazamento de metadados temporais.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* SEÇÃO 5: QUAL ESCOLHER */}
+          <section className="space-y-6 pt-8 border-t border-zinc-900">
+            <h2 className="font-mono text-3xl font-bold tracking-tight text-zinc-100">
+              05. Qual Chave Escolher?
+            </h2>
+            <p className="text-lg leading-relaxed text-zinc-400 font-sans">
+              A resposta curta e sem enrolação é: **na esmagadora maioria dos sistemas distribuídos, microsserviços e aplicações web modernas, o UUID v7 será bem-vindo e deve ser o seu padrão.**
+            </p>
+            <p className="text-lg leading-relaxed text-zinc-400 font-sans">
+              Use chaves inteiras auto-incrementais apenas para tabelas puramente internas onde o armazenamento é crítico e a legibilidade no desenvolvimento local é prioritária. Evite o UUID v4 inteiramente para chaves primárias, a menos que você precise ocultar 100% da data de criação da chave por questões rígidas de privacidade.
+            </p>
+          </section>
+
+        </article>
       </main>
+
+      {/* FOOTER */}
+      <footer className="mt-auto w-full border-t border-zinc-900 bg-[#060606]">
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between md:px-8">
+          <p className="text-xs tracking-[0.3em] text-zinc-600 uppercase font-mono">
+            UUID V7 vs Outros IDs
+          </p>
+
+          <div className="flex flex-wrap items-center gap-6 text-sm text-zinc-500">
+            <span>mateusbosquetti123@gmail.com</span>
+            <a
+              href="https://www.linkedin.com/in/mateus-bosquetti/"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-zinc-300"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://github.com/mateusbosquetti"
+              target="_blank"
+              rel="noreferrer"
+              className="transition-colors hover:text-zinc-300"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
