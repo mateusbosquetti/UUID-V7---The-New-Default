@@ -1,6 +1,7 @@
 import React from "react";
 import UuidV7Generator from "@/components/uuid-generator";
 import BTreeSimulator from "@/components/btree-simulator";
+import UrlDecoder from "@/components/url-decoder";
 
 export default function Home() {
   return (
@@ -116,18 +117,8 @@ export default function Home() {
               O contra mais grave, contudo, é a **Vazamento de Privacidade Temporal (Metadata Leak)**. Como os primeiros 48 bits do UUID v7 representam a data de criação, qualquer usuário que tenha acesso ao ID exposto publicamente na URL pode descobrir o milissegundo exato em que aquele recurso foi criado.
             </p>
 
-            {/* PLACEHOLDER: WIDGET 3 - FAKE BROWSER / DECODER */}
-            <div className="w-full my-8 p-12 border border-dashed border-zinc-800 bg-zinc-950/40 rounded-2xl flex flex-col items-center justify-center gap-4 text-center">
-              <div className="h-10 w-10 rounded-full bg-orange-950/50 border border-orange-800 flex items-center justify-center text-orange-400 font-semibold text-lg animate-pulse">
-                🌐
-              </div>
-              <div>
-                <h3 className="text-lg font-medium text-zinc-200">Widget: Fake Browser & URL Decoder</h3>
-                <p className="text-sm text-zinc-500 max-w-md mt-1">
-                  [Fase Interativa] Aqui simularemos um navegador fake contendo um UUID v7 na URL de um pedido de compra, permitindo ao usuário decodificar o ID e revelar o dia/hora exato da compra, provando o vazamento de metadados temporais.
-                </p>
-              </div>
-            </div>
+            {/* DECODIFICADOR DE URL E PRIVACIDADE */}
+            <UrlDecoder />
           </section>
 
           {/* SEÇÃO 5: QUAL ESCOLHER */}
