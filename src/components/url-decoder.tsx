@@ -67,7 +67,7 @@ export default function UrlDecoder() {
             <FiGlobe className="text-zinc-650 text-xs shrink-0" />
             
             <div className="text-[11px] md:text-xs font-mono text-zinc-500 truncate flex items-center">
-              socialnetwork.com/u/
+              socialnetwork.com/profiles/
               <span 
                 ref={urlTextRef}
                 className={`transition-all duration-300 font-bold px-0.5 rounded ${
@@ -85,13 +85,13 @@ export default function UrlDecoder() {
               </span>
             </div>
 
-            {/* LASER SWEEP ANIMATION */}
+            {/* LASER SWEEP ANIMATION (SCANS ENTIRE BAR) */}
             {status === "scanning" && (
               <motion.div 
-                initial={{ x: "-100%" }}
-                animate={{ x: "100%" }}
-                transition={{ duration: 0.8, repeat: 2, ease: "easeInOut" }}
-                className="absolute inset-y-0 w-24 bg-gradient-to-r from-transparent via-red-500/30 to-transparent pointer-events-none"
+                initial={{ left: "0%" }}
+                animate={{ left: ["0%", "100%", "0%"] }}
+                transition={{ duration: 1.6, ease: "easeInOut" }}
+                className="absolute inset-y-0 w-[2px] bg-red-500 shadow-[0_0_8px_#ef4444] pointer-events-none"
               />
             )}
           </div>
