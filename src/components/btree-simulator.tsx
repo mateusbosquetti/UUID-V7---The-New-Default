@@ -328,19 +328,21 @@ export default function BTreeSimulator() {
           <FiActivity className="text-zinc-600" />
           Log de Escritas no Banco
         </div>
-        <div className="h-28 bg-zinc-950/70 border border-zinc-900 rounded-xl p-3 font-mono text-xs overflow-y-auto flex flex-col gap-1.5 scrollbar-thin">
-          {logs.map((log, index) => (
-            <div 
-              key={index} 
-              className={`leading-relaxed ${
-                index === 0 
-                  ? activeTab === "v7" ? "text-emerald-400 font-semibold" : "text-red-400 font-semibold"
-                  : "text-zinc-500"
-              }`}
-            >
-              {log}
-            </div>
-          ))}
+        <div className="bg-zinc-950/70 border border-zinc-900 rounded-xl overflow-hidden">
+          <div className="h-28 p-3 pr-4 font-mono text-xs overflow-y-auto flex flex-col gap-1.5 scrollbar-custom">
+            {logs.map((log, index) => (
+              <div 
+                key={index} 
+                className={`leading-relaxed ${
+                  index === 0 
+                    ? activeTab === "v7" ? "text-emerald-400 font-semibold" : "text-red-400 font-semibold"
+                    : "text-zinc-500"
+                }`}
+              >
+                {log}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
