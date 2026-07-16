@@ -1,5 +1,6 @@
 import React from "react";
 import UuidV7Generator from "@/components/uuid-generator";
+import BTreeSimulator from "@/components/btree-simulator";
 
 export default function Home() {
   return (
@@ -91,18 +92,8 @@ export default function Home() {
               Com o UUID v7, como os primeiros bits são baseados no tempo incremental, cada nova chave inserida é naturalmente maior que a anterior. O banco de dados insere os novos registros sempre no final da estrutura do índice, de forma linear e ordenada, com **zero quebra de páginas**.
             </p>
 
-            {/* PLACEHOLDER: WIDGET 2 - SIMULADOR B-TREE */}
-            <div className="w-full my-8 p-12 border border-dashed border-zinc-800 bg-zinc-950/40 rounded-2xl flex flex-col items-center justify-center gap-4 text-center">
-              <div className="h-10 w-10 rounded-full bg-emerald-950/50 border border-emerald-800 flex items-center justify-center text-emerald-400 font-semibold text-lg animate-pulse">
-                🌳
-              </div>
-              <div>
-                <h3 className="text-lg font-medium text-zinc-200">Widget: Simulador de Árvore B-Tree</h3>
-                <p className="text-sm text-zinc-500 max-w-md mt-1">
-                  [Fase Interativa] Aqui exibiremos a simulação lado a lado de inserção na B-Tree, demonstrando visualmente as quebras de blocos e fragmentação no UUID v4 versus o fluxo linear e contínuo no UUID v7.
-                </p>
-              </div>
-            </div>
+            {/* SIMULADOR DE B-TREE */}
+            <BTreeSimulator />
           </section>
 
           {/* SEÇÃO 4: CONTRAS & TRADE-OFFS */}
