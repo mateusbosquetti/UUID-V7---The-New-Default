@@ -58,26 +58,26 @@ Provar visualmente como o UUID v4 degrada a performance de escrita em bancos de 
 
 ---
 
-## 🟠 Widget 3: Fake Browser & URL Decoder
+## 🟠 Widget 3: Fake Browser & URL Decoder (Redesign)
 
 ### 1. Objetivo
-Demonstrar a quebra de privacidade e o vazamento de inteligência comercial (Business Intelligence Leak) causados pelo UUID v7 ao expô-lo em links públicos.
+Demonstrar na prática o risco de vazamento de privacidade temporal (Metadata Leak) contido em qualquer UUID v7 público na URL de um recurso do sistema.
 
 ### 2. Design e Layout
-- **Visualizador de Navegador (Fake Browser):** Barra de endereço simulada com protocolo HTTPS trancado contendo a URL: `https://concorrente.com/checkout/order/0190b4d2-f125-7b5a-93a8-429be9752f40`.
-- **Área do Recibo:** Painel com o status da compra de um cliente fictício ("Pedido confirmado! ID: 0190...").
-- **Console de Espionagem:** Terminal técnico simulado ao lado com o botão: "Escanear URL e Espionar Vendas".
+- **Barra de Endereços Superior (100% de largura):** Um cabeçalho de navegador simulado que se estende por toda a largura do widget, contendo a URL: `https://socialnetwork.com/u/0190b4d2-f125-7b5a-93a8-429be9752f40`.
+- **Layout Inferior Dividido (50% / 50% de largura):**
+  - **Lado Esquerdo (O Espião / Olho Cyberpunk):** Exibe um olho digital estilizado em SVG com temática cyberpunk. Ele pulsa e pisca sutilmente em estado de espera (standby). Possui um botão de ação integrado "Espionar Perfil".
+  - **Lado Direito (O Conversor de Metadados):** Um painel de análise tecnológica que aguarda a captura dos bits do ID.
 
-### 3. Funcionamento (Lógica do Vazamento de Negócios)
-- Ao clicar em escanear, o console analisa a URL e extrai o timestamp de milissegundos do ID, revelando o horário exato da compra de João Silva.
-- **Simulação de Inteligência Comercial (O Risco Real):**
-  - O console dispara um log simulando a captura automática de um segundo pedido feito pelo mesmo comprador fictício 30 segundos depois.
-  - O sistema calcula o intervalo de tempo entre as compras e estima instantaneamente a saúde financeira do concorrente:
-    - *Tempo decorrido:* 30 segundos.
-    - *Frequência de vendas calculada:* 2 pedidos por minuto (120 pedidos/hora).
-    - *Projeção de faturamento diário e mensal estimada.*
-  - Isso ilustra como concorrentes podem mapear com precisão cirúrgica a taxa de tração e vendas do seu negócio apenas gerando dois pedidos espaçados no tempo.
+### 3. Funcionamento (Lógica)
+- **Ação:** O usuário clica no botão "Espionar Perfil".
+- **O Scanner:** O olho cyberpunk se ativa, abre sua pupila digital e emite uma projeção vertical de laser que sobe até a barra de endereços superior, varrendo-a lateralmente duas vezes.
+- **A Extração:** O trecho de tempo `0190b4d2-f125` na URL brilha e se "descola", flutuando pelo ar até cair no painel do conversor.
+- **A Revelação:** O conversor decodifica os 48 bits e revela de forma agnóstica o momento exato em que aquele perfil de usuário foi gerado no banco de dados.
 
 ### 4. Animações e Micro-interações
-- **Laser Scanner:** Uma linha horizontal neon varre a URL na tela.
-- **Física de Bits (GSAP):** Os primeiros 12 caracteres hexadecimais da barra de URL brilham, se desprendem fisicamente do texto da barra de endereços e flutuam em arco pelo ar até caírem dentro do console espião, onde se transformam em um relógio que roda rápido até parar na hora decodificada da venda.
+- **GSAP / Framer Motion:**
+  - Animação do olho SVG (abertura de pupila, feixe de luz).
+  - Linha laser varrendo a URL na horizontal.
+  - Partícula de texto flutuante viajando em trajetória curva até o conversor.
+  - Contador do conversor girando rapidamente até congelar na data final (`15 de Julho de 2024 às 15:13:24.901`).
