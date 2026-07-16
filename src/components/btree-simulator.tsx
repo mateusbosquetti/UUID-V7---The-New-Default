@@ -121,16 +121,52 @@ export default function BTreeSimulator() {
     return { pages: updatedPages, splitOccurred };
   };
 
+  // Helper to dynamically adjust page layout based on total page count
+  const getPageStyles = (numPages: number) => {
+    if (numPages <= 3) {
+      return {
+        card: "w-40 md:w-44 min-h-[140px] p-3 gap-2",
+        header: "text-[10px] pb-1.5",
+        itemsGap: "gap-1.5",
+        pill: "px-2 py-1.5 text-xs"
+      };
+    } else if (numPages === 4) {
+      return {
+        card: "w-32 md:w-36 min-h-[120px] p-2.5 gap-1.5",
+        header: "text-[9px] pb-1",
+        itemsGap: "gap-1",
+        pill: "px-1.5 py-1 text-[11px]"
+      };
+    } else {
+      return {
+        card: "w-24 md:w-28 min-h-[100px] p-2 gap-1",
+        header: "text-[8px] pb-0.5",
+        itemsGap: "gap-0.5",
+        pill: "px-1 py-0.5 text-[9px]"
+      };
+    }
+  };
+
   const handleSimulate = async () => {
     if (isSimulating) return;
     setIsSimulating(true);
 
-    let currentPages = [...pages];
-    let currentCounter = sequenceCounter;
-    let localSplits = splits;
-    let localFrag = fragmentation;
+    // Reset everything to start the simulation from scratch
+    let currentPages: Page[] = [];
+    let currentCounter = 0;
+    let localSplits = 0;
+    let localFrag = 0;
 
-    const iterations = 8;
+    setPages([]);
+    setSplits(0);
+    setFragmentation(0);
+    setLogs([`Iniciando nova gravação de 15 registros de ${activeTab === "v7" ? "UUID v7 (Time-Ordered)" : "UUID v4 (Aleatório)"}...`]);
+    setSequenceCounter(0);
+
+    // Short delay to let the UI visually reset before animating
+    await new Promise((r) => setTimeout(r, 300));
+
+    const iterations = 15;
     for (let i = 0; i < iterations; i++) {
       let result;
       if (activeTab === "v7") {
@@ -157,8 +193,8 @@ export default function BTreeSimulator() {
         );
       }, 400);
 
-      // Animation delay between inserts
-      await new Promise((r) => setTimeout(r, 650));
+      // Slightly faster animation interval since we have more items to insert
+      await new Promise((r) => setTimeout(r, 450));
     }
 
     setIsSimulating(false);
@@ -267,57 +303,60 @@ export default function BTreeSimulator() {
           </div>
         ) : (
           <AnimatePresence>
-            {pages.map((page, index) => (
-              <motion.div
-                key={page.id}
-                initial={{ opacity: 0, scale: 0.8, y: 15 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1, 
-                  y: 0,
-                  x: page.isSplitting ? [0, -8, 8, -6, 6, 0] : 0
-                }}
-                transition={{ 
-                  y: { type: "spring", stiffness: 100, damping: 12 },
-                  x: { duration: 0.35, ease: "easeInOut" }
-                }}
-                className={`p-3 bg-zinc-950 border rounded-xl flex flex-col gap-2 w-44 min-h-[140px] shadow-lg relative ${
-                  page.isSplitting
-                    ? activeTab === "v7" 
-                      ? "border-emerald-600 bg-emerald-950/5 shadow-emerald-500/5" 
-                      : "border-red-600 bg-red-950/5 shadow-red-500/5"
-                    : "border-zinc-850 bg-zinc-950"
-                }`}
-              >
-                {/* PAGE HEADER */}
-                <div className="flex justify-between items-center text-[10px] font-mono text-zinc-500 border-b border-zinc-900 pb-1.5">
-                  <span className="flex items-center gap-1">
-                    <span className={`h-1.5 w-1.5 rounded-full ${activeTab === "v7" ? "bg-emerald-500" : "bg-red-500"}`} />
-                    Pág. {index + 1}
-                  </span>
-                  <span>{page.items.length}/4</span>
-                </div>
+            {(() => {
+              const styles = getPageStyles(pages.length);
+              return pages.map((page, index) => (
+                <motion.div
+                  key={page.id}
+                  initial={{ opacity: 0, scale: 0.8, y: 15 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1, 
+                    y: 0,
+                    x: page.isSplitting ? [0, -8, 8, -6, 6, 0] : 0
+                  }}
+                  transition={{ 
+                    y: { type: "spring", stiffness: 100, damping: 12 },
+                    x: { duration: 0.35, ease: "easeInOut" }
+                  }}
+                  className={`bg-zinc-950 border rounded-xl flex flex-col shadow-lg relative ${styles.card} ${
+                    page.isSplitting
+                      ? activeTab === "v7" 
+                        ? "border-emerald-600 bg-emerald-950/5 shadow-emerald-500/5" 
+                        : "border-red-600 bg-red-950/5 shadow-red-500/5"
+                      : "border-zinc-850 bg-zinc-950"
+                  }`}
+                >
+                  {/* PAGE HEADER */}
+                  <div className={`flex justify-between items-center font-mono text-zinc-500 border-b border-zinc-900 ${styles.header}`}>
+                    <span className="flex items-center gap-1">
+                      <span className={`h-1.5 w-1.5 rounded-full ${activeTab === "v7" ? "bg-emerald-500" : "bg-red-500"}`} />
+                      Pág. {index + 1}
+                    </span>
+                    <span>{page.items.length}/4</span>
+                  </div>
 
-                {/* ITEMS INSIDE PAGE */}
-                <div className="flex flex-col gap-1.5 flex-1">
-                  {page.items.map((item, itemIdx) => (
-                    <motion.div
-                      key={`${page.id}-${item}`}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: itemIdx * 0.05 }}
-                      className={`px-2 py-1.5 font-mono text-xs rounded border text-center font-medium ${
-                        activeTab === "v7"
-                          ? "bg-emerald-950/20 border-emerald-900/50 text-emerald-300"
-                          : "bg-red-950/20 border-red-900/50 text-red-300"
-                      }`}
-                    >
-                      {activeTab === "v7" ? `v7: ${item.substring(0, 4)}...` : `v4: ${item}`}
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+                  {/* ITEMS INSIDE PAGE */}
+                  <div className={`flex flex-col flex-1 ${styles.itemsGap} mt-2`}>
+                    {page.items.map((item, itemIdx) => (
+                      <motion.div
+                        key={`${page.id}-${item}`}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: itemIdx * 0.05 }}
+                        className={`font-mono rounded border text-center font-medium ${styles.pill} ${
+                          activeTab === "v7"
+                            ? "bg-emerald-950/20 border-emerald-900/50 text-emerald-300"
+                            : "bg-red-950/20 border-red-900/50 text-red-300"
+                        }`}
+                      >
+                        {activeTab === "v7" ? `v7: ${item.substring(0, 4)}...` : `v4: ${item}`}
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              ));
+            })()}
           </AnimatePresence>
         )}
       </div>
