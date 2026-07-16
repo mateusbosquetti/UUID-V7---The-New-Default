@@ -1,4 +1,5 @@
 import React from "react";
+import UuidV7Generator from "@/components/uuid-generator";
 
 export default function Home() {
   return (
@@ -71,18 +72,8 @@ export default function Home() {
               O UUID v7 codifica a data e hora atual (Unix epoch em milissegundos) em seus primeiros 48 bits, seguidos por bits fixos de versão e variante, e finalizando com 74 bits de entropia aleatória. Isso significa que, lexicograficamente, os IDs gerados cronologicamente serão sempre sequenciais.
             </p>
 
-            {/* PLACEHOLDER: WIDGET 1 - GERADOR & RAIO-X */}
-            <div className="w-full my-8 p-12 border border-dashed border-zinc-800 bg-zinc-950/40 rounded-2xl flex flex-col items-center justify-center gap-4 text-center">
-              <div className="h-10 w-10 rounded-full bg-violet-950/50 border border-violet-800 flex items-center justify-center text-violet-400 font-semibold text-lg animate-pulse">
-                ⚡
-              </div>
-              <div>
-                <h3 className="text-lg font-medium text-zinc-200">Widget: Gerador & Raio-X de Bits</h3>
-                <p className="text-sm text-zinc-500 max-w-md mt-1">
-                  [Fase Interativa] Aqui renderizaremos o gerador visual de UUID v7, que explode a chave em blocos coloridos detalhando o Timestamp (roxo), Versão (verde), Variante (azul) e Entropia (laranja).
-                </p>
-              </div>
-            </div>
+            {/* GERADOR & RAIO-X INTERATIVO */}
+            <UuidV7Generator />
           </section>
 
           {/* SEÇÃO 3: FUNCIONAMENTO & PERFORMANCE */}
