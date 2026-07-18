@@ -1,26 +1,100 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import UuidV7Generator from "@/components/uuid-generator";
 import BTreeSimulator from "@/components/btree-simulator";
 import UrlDecoder from "@/components/url-decoder";
 
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
+
+  useGSAP(() => {
+    // 1. Step 1 -> Step 2: Centered to bottom footer-hero and scale up after 1s
+    const introTl = gsap.timeline();
+    
+    // Determine responsive values
+    const isMobile = window.innerWidth < 768;
+    const targetY = isMobile ? "22vh" : "28vh";
+    const targetScale = isMobile ? 1.3 : 1.8;
+
+    introTl.fromTo(
+      textRef.current,
+      { y: 0, scale: 1 },
+      {
+        y: targetY,
+        scale: targetScale,
+        duration: 1.0,
+        delay: 1.0,
+        ease: "power3.inOut",
+      }
+    );
+
+    // 2. Step 2 -> Step 3: Scroll-driven shrink and move to top of article (H1 position)
+    gsap.to(textRef.current, {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "100vh top", // Entire first viewport scroll duration
+        scrub: true,
+        pin: textRef.current, // Pin the text relative to the screen during scroll
+        pinSpacing: false,
+      },
+      y: 0, // Align exactly back to natural top flow
+      scale: 1, // Reset scale back to H1 size
+      ease: "none",
+    });
+  }, { scope: containerRef });
+
   return (
-    <div className="flex min-h-screen flex-col overflow-x-clip bg-[#030303]">
-      <main className="mx-auto w-full max-w-4xl flex-1 px-6 pt-24 pb-16 md:px-8 md:pt-28 md:pb-24">
-        {/* HEADER / HERO */}
-        <header className="flex flex-col border-b border-zinc-900 pb-12 mb-12">
-          <h1 className="mb-6 font-mono text-5xl font-bold tracking-tighter text-white md:text-7xl">
+    <div ref={containerRef} className="flex min-h-screen flex-col overflow-x-clip bg-[#030303]">
+      
+      {/* HERO SECTION (100vh) */}
+      <section className="h-screen w-full flex flex-col justify-between items-center relative overflow-hidden bg-black text-white px-6 z-10 select-none">
+        {/* Subtle dark glow */}
+        <div className="absolute inset-0 bg-radial-gradient from-zinc-950 via-black to-black opacity-70 pointer-events-none" />
+        
+        {/* Top-Left metadata */}
+        <div className="absolute top-8 left-8 max-w-xs text-xs text-zinc-500 font-sans leading-relaxed">
+          A evolução inevitável das chaves primárias. Unindo a unicidade de 128 bits com a ordenação temporal.
+        </div>
+
+        {/* Spacer for centered layout */}
+        <div className="flex-1" />
+
+        {/* Hero Footer navigation details */}
+        <div className="w-full max-w-4xl mx-auto border-t border-zinc-900 py-6 flex justify-between items-center text-[10px] font-mono text-zinc-600">
+          <span>INTRODUÇÃO</span>
+          <span className="animate-bounce">ROLE PARA LER ↓</span>
+          <span>V1.0</span>
+        </div>
+      </section>
+
+      {/* ARTICLE BODY */}
+      <main className="mx-auto w-full max-w-4xl flex-1 px-6 pt-16 pb-16 md:px-8 md:pb-24 z-20">
+        
+        {/* Anchor point where the H1 will settle and continue normal scroll */}
+        <header className="flex flex-col border-b border-zinc-900 pb-12 mb-12 relative">
+          
+          {/* Pinned target title element */}
+          <h1 
+            ref={textRef} 
+            className="font-sans font-extrabold tracking-tighter text-white text-5xl md:text-7xl select-none flex flex-col origin-center"
+          >
             UUID v7
-            <span className="block mt-2 bg-gradient-to-r from-zinc-200 to-zinc-500 bg-clip-text text-transparent text-4xl md:text-5xl font-sans font-semibold tracking-normal">
+            <span className="block text-3xl md:text-4xl text-zinc-500 font-semibold mt-2">
               The New Default.
             </span>
           </h1>
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <p className="max-w-2xl text-xl text-zinc-400 leading-relaxed font-sans">
-              A evolução inevitável das chaves primárias.
-            </p>
-          </div>
+          {/* Spacer height equal to the H1's height to prevent page layout jump */}
+          <div className="h-28 md:h-36 pointer-events-none" />
 
           {/* AUTHOR METADATA */}
           <div className="mt-8 flex items-center gap-4">
@@ -138,7 +212,7 @@ export default function Home() {
       </main>
 
       {/* FOOTER */}
-      <footer className="mt-auto w-full border-t border-zinc-900 bg-[#060606]">
+      <footer className="mt-auto w-full border-t border-zinc-900 bg-[#060606] z-30">
         <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between md:px-8">
           <p className="text-xs tracking-[0.3em] text-zinc-600 uppercase font-mono">
             UUID V7 vs Outros IDs
