@@ -24,9 +24,11 @@ export default function Home() {
 
           {/* AUTHOR METADATA */}
           <div className="mt-8 flex items-center gap-4">
-            <div className="h-10 w-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 font-bold text-sm">
-              MB
-            </div>
+            <img
+              src="/autor.jpg"
+              alt="Mateus Bosquetti"
+              className="h-10 w-10 rounded-full object-cover border border-zinc-700"
+            />
             <div className="flex flex-col">
               <span className="text-sm font-semibold text-zinc-200">Mateus Bosquetti</span>
               <div className="mt-0.5 flex items-center gap-2 font-mono text-xs text-zinc-500">
