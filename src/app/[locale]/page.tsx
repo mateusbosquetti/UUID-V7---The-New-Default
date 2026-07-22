@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import UuidV7Generator from "@/components/uuid-generator";
 import BTreeSimulator from "@/components/btree-simulator";
 import UrlDecoder from "@/components/url-decoder";
+import LanguageSwitcher from "@/components/language-switcher";
 
 export default function Home() {
   const t = useTranslations("HomePage");
@@ -27,10 +28,11 @@ export default function Home() {
             </span>
           </h1>
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="md:flex md:justify-between">
             <p className={`mb-12 max-w-2xl ${paragraphClassName} md:text-xl`}>
               {t("subtitle")}
             </p>
+            <LanguageSwitcher />
           </div>
 
           {/* AUTHOR METADATA */}
