@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import UuidV7Generator from "@/components/uuid-generator";
 import BTreeSimulator from "@/components/btree-simulator";
@@ -11,9 +11,9 @@ export default function Home() {
   const t = useTranslations("HomePage");
 
   const paragraphClassName =
-    "font-sans text-base font-normal leading-8 text-[rgba(255,255,255,0.72)] md:text-[1.05rem]";
+    "font-['Inter'] text-base font-normal leading-8 text-[rgba(255,255,255,0.72)] md:text-[1.05rem]";
   const heading2ClassName =
-    "mt-16 mb-4 font-mono text-4xl font-semibold tracking-tight text-zinc-100 md:text-5xl";
+    "mt-16 mb-4 font-['JetBrains_Mono'] text-4xl font-semibold tracking-tight text-zinc-100 md:text-5xl";
   const sectionClassName = "space-y-6 md:space-y-7";
 
   return (
@@ -37,13 +37,19 @@ export default function Home() {
 
           {/* AUTHOR METADATA */}
           <div className="flex items-center gap-4">
-            <img
-              src="/autor.jpg"
-              alt="Mateus Bosquetti"
-              className="h-12 w-12 rounded-full object-cover border-2 border-zinc-800"
-            />
+            <div className="relative h-12 w-12">
+              <Image
+                src="/autor.jpg"
+                alt={t("meta.avatar-alt")}
+                fill
+                className="rounded-full border-2 border-zinc-800"
+              />
+            </div>
+
             <div className="flex flex-col">
-              <span className="text-sm font-semibold text-zinc-200">{t("meta.author")}</span>
+              <span className="text-sm font-semibold text-zinc-200">
+                {t("meta.author")}
+              </span>
               <div className="mt-0.5 flex items-center gap-2 font-mono text-sm text-zinc-500">
                 <time dateTime="2026-07-15">{t("meta.date")}</time>
                 <span className="h-1 w-1 rounded-full bg-zinc-700"></span>
@@ -171,30 +177,27 @@ export default function Home() {
         </article>
       </main>
 
-      {/* FOOTER */}
-      <footer className="mt-auto w-full border-t border-zinc-900 bg-[#060606]">
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between md:px-8">
-          <p className="text-xs tracking-[0.3em] text-zinc-600 uppercase font-mono">
-            {t("footer.subtitle")}
+      <footer className="mt-auto w-full border-t border-zinc-900">
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 py-10 md:flex-row md:items-center md:justify-between md:px-8">
+          <p className="text-xs tracking-[0.35em] text-zinc-500 uppercase">
+            {t("footer.contact")}
           </p>
 
-          <div className="flex flex-wrap items-center gap-6 text-sm text-zinc-500">
+          <div className="flex flex-wrap items-center gap-6 text-sm text-zinc-400">
             <span>mateusbosquetti123@gmail.com</span>
             <a
-              href="https://www.linkedin.com/in/mateus-bosquetti/"
-              target="_blank"
-              rel="noreferrer"
-              className="transition-colors hover:text-zinc-300"
+              href="https://www.instagram.com/mateus.bosquetti/"
+              aria-label="Instagram"
+              className="transition-colors hover:text-white"
             >
-              LinkedIn
+              Instagram
             </a>
             <a
-              href="https://github.com/mateusbosquetti"
-              target="_blank"
-              rel="noreferrer"
-              className="transition-colors hover:text-zinc-300"
+              href="https://www.linkedin.com/in/mateus-bosquetti/"
+              aria-label="LinkedIn"
+              className="transition-colors hover:text-white"
             >
-              GitHub
+              LinkedIn
             </a>
           </div>
         </div>

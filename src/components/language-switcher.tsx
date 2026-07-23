@@ -63,7 +63,6 @@ export default function LanguageSwitcher() {
               ) : null}
               <span className="relative z-10 flex items-center justify-center gap-1">
                 {label}
-                {isDisabled && <span className="text-[10px]">🔒</span>}
               </span>
             </button>
           );

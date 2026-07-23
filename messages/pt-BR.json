@@ -4,9 +4,10 @@
     "title-second-part": "The New Default.",
     "subtitle": "A evolução inevitável das chaves primárias.",
     "meta": {
-      "author": "Mateus Bosquetti",
-      "date": "15 de Julho, 2026",
-      "read-time": "Leitura de 8 min"
+      "author": "por Mateus Henrique Bosquetti",
+      "date": "15 Jul, 2026",
+      "read-time": "8 minutos de leitura",
+      "avatar-alt": "Mateus Henrique Bosquetti"
     },
     "section1": {
       "p1": "A primeira coisa ao desenvolvermos uma modelagem de dados de uma tabela é pensar na PK, e por mais que pareça simples, as opções mais escolhidas trazem uma série de problemas inimagináveis.",
@@ -18,18 +19,18 @@
       "p3": "Para resolver isso, muitos desenvolvedores adotaram o <code_val>UUID v4</code_val> (IDs de 128 bits gerados aleatoriamente). Embora resolva a descentralização, o UUID v4 traz um problema silencioso e ainda mais perigoso: <bold_val>a destruição da velocidade de escrita dos índices em árvores B-Tree</bold_val>, forçando o banco de dados a reordenar páginas físicas no disco a cada nova inserção."
     },
     "section2": {
-      "title": "02. A Solução: UUID v7",
+      "title": "A Solução: UUID v7",
       "p1": "O melhor dos dois mundos. O UUID v7 une a unicidade universal de 128 bits com a ordenação temporal (Time-Ordered), sendo hoje suportado nativamente por diversos bancos de dados modernos.",
       "p2": "O UUID v7 codifica a data e hora atual (Unix epoch em milissegundos) em seus primeiros 48 bits, seguidos por bits fixos de versão e variante, e finalizando com 74 bits de entropia aleatória. Isso significa que, lexicograficamente, os IDs gerados cronologicamente serão sempre sequenciais."
     },
     "section3": {
-      "title": "03. Performance no Banco: B-Tree",
+      "title": "Performance no Banco: B-Tree",
       "p1": "Por que a ordenação temporal importa tanto para o banco de dados? A maioria dos bancos de dados relacionais (PostgreSQL, MySQL, SQL Server) organiza suas chaves primárias em estruturas de dados chamadas B-Trees (Árvores B).",
       "p2": "Quando você insere um registro com UUID v4 (totalmente aleatório), o banco tenta inseri-lo em um local aleatório no meio do índice. Se o bloco (página de disco) correspondente já estiver cheio, o banco é forçado a dividir a página física ao meio para abrir espaço (<bold_val>Page Split</bold_val>). Isso resulta em I/O de disco pesado, fragmentação e degradação drástica da performance conforme a tabela cresce.",
       "p3": "Com o UUID v7, como os primeiros bits são baseados no tempo incremental, cada nova chave inserida é naturalmente maior que a anterior. O banco de dados insere os novos registros sempre no final da estrutura do índice, de forma linear e ordenada, com <bold_val>zero quebra de páginas</bold_val>."
     },
     "section4": {
-      "title": "04. Contras e o Risco de Privacidade",
+      "title": "Contras e o Risco de Privacidade",
       "p1": "Nenhuma escolha de arquitetura vem de graça. O UUID v7 apresenta desvantagens objetivas que você deve levar em conta antes de autá-lo:",
       "li1-strong": "Espaço em Disco e Cache:",
       "li1-text": " Um UUID v7 ocupa <bold_val>16 bytes</bold_val>, enquanto um ID numérico sequencial (BIGINT) consome apenas <bold_val>8 bytes</bold_val>. Em bancos de dados gigantescos, esse dobro de tamanho se propaga por todas as chaves estrangeiras (FKs) e índices secundários, exigindo mais memória RAM para manter os índices em cache.",
@@ -38,12 +39,12 @@
       "p2": "O contra mais grave, contudo, é a <bold_val>Vazamento de Privacidade Temporal (Metadata Leak)</bold_val>. Como os primeiros 48 bits do UUID v7 representam a data de criação, qualquer usuário que tenha acesso ao ID exposto publicamente na URL pode descobrir o milissegundo exato em que aquele recurso foi criado."
     },
     "section5": {
-      "title": "05. Qual Chave Escolher?",
+      "title": "Qual Chave Escolher?",
       "p1": "A resposta curta e sem enrolação é: <bold_val>na esmagadora maioria dos sistemas distribuídos, microsserviços e aplicações web modernas, o UUID v7 será bem-vindo e deve ser o seu padrão.</bold_val>",
       "p2": "Use chaves inteiras auto-incrementais apenas para tabelas puramente internas onde o armazenamento é crítico e a legibilidade no desenvolvimento local é prioritária. Evite o UUID v4 inteiramente para chaves primárias, a menos que você precise ocultar 100% da data de criação da chave por questões rígidas de privacidade."
     },
     "footer": {
-      "subtitle": "UUID V7 VS OUTROS IDS"
+      "contact": "FALE COMIGO"
     }
   }
 }
